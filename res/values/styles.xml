@@ -1,0 +1,7 @@
+<resources>
+
+    <style name="LiveCodeTheme" parent="android:Theme.Holo.Light">
+        
+    </style>
+
+</resources>
