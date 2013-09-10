@@ -8,10 +8,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -41,6 +45,17 @@ public class MainActivity extends Activity {
     // Create an instance of NewsListAdapter and set the adapter for the ListView
     mListAdapter = new NewsListAdapter();
     mListView.setAdapter(mListAdapter);
+    
+    // Set the on click action for the ListView
+    mListView.setOnItemClickListener(new OnItemClickListener() {
+
+      @Override
+      public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        i.setData(Uri.parse(mNewsItems.get(position).url));
+        startActivity(i);
+      }
+    });
 
     // Create a simple JsonObjectRequest
     CustomApplication.requestQueue.add(new JsonObjectRequest(
@@ -65,7 +80,7 @@ public class MainActivity extends Activity {
                 
                 // Create a new NewsItem and add it to the list
                 NewsItem tempItem = new NewsItem(child.getString("title"), 
-                    child.getString("author"));
+                    child.getString("author"),child.getString("url"));
                 mNewsItems.add(tempItem);
                 
                 // Log the title
