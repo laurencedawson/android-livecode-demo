@@ -1,6 +1,7 @@
 package com.laurencedawson.livecode;
 
 import android.app.Application;
+import android.graphics.Typeface;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
@@ -24,12 +25,16 @@ public class CustomApplication extends Application {
    */
   public static RequestQueue requestQueue;
   
+  public static Typeface robotoLight;
+
   @Override
   public void onCreate() {
     super.onCreate();
     
     // Create an instance of request queue
     requestQueue = Volley.newRequestQueue(this);
+    
+    robotoLight = Typeface.createFromAsset(getAssets(),"RobotoLight.ttf");
   }
   
 }

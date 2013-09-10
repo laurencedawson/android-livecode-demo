@@ -132,6 +132,7 @@ public class MainActivity extends Activity {
       
       if(convertView==null){
         convertView = getLayoutInflater().inflate(R.layout.news_list_item, null);
+        ((TextView)convertView.findViewById(R.id.title)).setTypeface(CustomApplication.robotoLight);
       }
       
       NewsItem item = mNewsItems.get(position);
