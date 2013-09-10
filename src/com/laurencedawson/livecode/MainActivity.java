@@ -10,7 +10,11 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.android.volley.Response.Listener;
@@ -20,6 +24,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 public class MainActivity extends Activity {
 
   private ListView mListView;
+  private NewsListAdapter mListAdapter; 
   private List<NewsItem> mNewsItems;
 
   @Override
@@ -32,6 +37,10 @@ public class MainActivity extends Activity {
 
     // Create a new list to hold the news items
     mNewsItems = new ArrayList<NewsItem>();
+    
+    // Create an instance of NewsListAdapter and set the adapter for the ListView
+    mListAdapter = new NewsListAdapter();
+    mListView.setAdapter(mListAdapter);
 
     // Create a simple JsonObjectRequest
     CustomApplication.requestQueue.add(new JsonObjectRequest(
@@ -62,6 +71,9 @@ public class MainActivity extends Activity {
                 // Log the title
                 Log.d(CustomApplication.TAG, child.getString("title"));
               }
+              
+              // Notify the adapter the contents of the list have changed
+              mListAdapter.notifyDataSetChanged();
 
             }catch(JSONException e){
               Log.e(CustomApplication.TAG, e.toString());
@@ -81,6 +93,40 @@ public class MainActivity extends Activity {
           }
 
         }));
+  }
+  
+  private class NewsListAdapter extends BaseAdapter{
+
+    @Override
+    public int getCount() {
+      return mNewsItems.size();
+    }
+
+    @Override
+    public Object getItem(int position) {
+      return null;
+    }
+
+    @Override
+    public long getItemId(int position) {
+      return 0;
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+      
+      if(convertView==null){
+        convertView = getLayoutInflater().inflate(R.layout.news_list_item, null);
+      }
+      
+      NewsItem item = mNewsItems.get(position);
+      
+      ((TextView)convertView.findViewById(R.id.title)).setText(item.title);
+      ((TextView)convertView.findViewById(R.id.author)).setText(item.author);
+      
+      return convertView;
+    }
+    
   }
 
 }
