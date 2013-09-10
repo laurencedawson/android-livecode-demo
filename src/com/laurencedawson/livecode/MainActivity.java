@@ -5,6 +5,7 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ListView;
 
 import com.android.volley.Response;
 import com.android.volley.Response.Listener;
@@ -13,10 +14,15 @@ import com.android.volley.toolbox.JsonObjectRequest;
 
 public class MainActivity extends Activity {
 
+  private ListView mListView;
+  
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
+    
+    // Grab the ListView
+    this.mListView = (ListView) findViewById(R.id.news_list);
 
     // Create a simple JsonObjectRequest
     CustomApplication.requestQueue.add(new JsonObjectRequest(
@@ -44,5 +50,5 @@ public class MainActivity extends Activity {
           
         }));
   }
-
+  
 }
